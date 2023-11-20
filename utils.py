@@ -36,7 +36,7 @@ def load_tokens(pipe, data, device):
         ref_token = pipe.tokenizer.tokenize(token_)
         ref_indx = pipe.tokenizer.convert_tokens_to_ids(ref_token)[0]
         embd_cur = data[token_].to(device).to(dtype=torch.float16)
-        pipe.text_encoder.text_model.embeddings.token_embedding.weight[ref_indx] = embd_cur
+        pipe.text_encoder.get_input_embeddings().weight.data[ref_indx] = embd_cur
 
 
 def save_rev_samples(output_path, path_to_embed, model_id, device):
